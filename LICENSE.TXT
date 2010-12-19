@@ -1,0 +1,6 @@
+You may use this software, TimedEvent.cs as you wish. 
+If you wish that I attach a recognized licence with this code (as per opensource.org, for example), recommend me one and I'll review it at that time. 
+
+Naman Kumar 
+http://www.namank.com
+December 19, 2010

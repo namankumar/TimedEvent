@@ -1,0 +1,21 @@
+A stand alone class that fires an event at a particular interval. This frees the user from having to know about timer, events, and delegates. Also, you can pass arguments each time the timer is fired.
+
+Include this namespace in your project and follow the instructions below:
+
+-----instantiate 
+TimedEvent event = new TimedEvent(int timeDelay, int fireInterval, object parameters)
+
+-----enable firing events 
+event.eventTrigger += new TimedEvent.fireEvent(methodToBeCalledWhenTimerFired);
+
+public void methodToBeCalledWhenTimerFired(object sender, EventArgs e)
+{
+  //Do something 
+  //Note the method signature...the method and delegate (fireEvent) signature MUST match
+  //"object sender" can be used to pass any sort of information
+}
+
+-----stop timer
+event.disposeTimer();
+
+Version 1.0 by Naman Kumar, August 25,2009
