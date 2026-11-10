@@ -1,21 +1,25 @@
-A stand alone class that fires an event at a particular interval. This frees the user from having to know about timer, events, and delegates. Also, you can pass arguments each time the timer is fired.
+TimedEvent
+==========
 
-Include this namespace in your project and follow the instructions below:
+A small C# wrapper around System.Threading.Timer. It raises an event at a chosen interval and passes an object to the handler. Version 1.0 was written August 25, 2009.
 
------instantiate 
-TimedEvent event = new TimedEvent(int timeDelay, int fireInterval, object parameters)
+Use it
+------
+Include TimedEvent.cs in your project. The class is in the com.nk.lib namespace and has internal visibility, so this example assumes the same assembly:
 
------enable firing events 
-event.eventTrigger += new TimedEvent.fireEvent(methodToBeCalledWhenTimerFired);
+    var timer = new com.nk.lib.TimedEvent(1000, 1000, "example");
+    timer.eventTrigger += (sender, args) => {
+        Console.WriteLine(sender);
+    };
 
-public void methodToBeCalledWhenTimerFired(object sender, EventArgs e)
-{
-  //Do something 
-  //Note the method signature...the method and delegate (fireEvent) signature MUST match
-  //"object sender" can be used to pass any sort of information
-}
+Keep the object alive for as long as you need it. Stop it with:
 
------stop timer
-event.disposeTimer();
+    timer.disposeTimer();
 
-Version 1.0 by Naman Kumar, August 25,2009
+The first two constructor arguments are the initial delay and repeat interval in milliseconds. The third is delivered to the handler as sender. A positive initial delay gives the caller time to subscribe after construction.
+
+Limits
+------
+Callbacks run on a thread-pool thread, not a UI thread. Slow callbacks can overlap. The wrapper does not marshal UI updates, catch callback exceptions, or implement IDisposable. Disposing the timer does not mean an already queued callback has finished.
+
+There is no project file or automated test suite here. Modern .NET compatibility was not tested in this documentation pass. See LICENSE.TXT for licensing.
